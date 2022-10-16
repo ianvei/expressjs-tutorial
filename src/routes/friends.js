@@ -1,6 +1,8 @@
 const { Router } = require('express');
 
+
 const router = Router();
+
 
 let groceryList = [
   {
@@ -18,9 +20,11 @@ let groceryList = [
 ];
 
 router.get("/", (req, res, next) => {
+  console.log(req.cookies);
+  res.cookie('visited', true, {
+    maxAge: 10000
+  });
   console.log('Before handling request');
-  next();
-}, (req, res) => {
   res.send(groceryList);
 });
 
