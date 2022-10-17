@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { hashPassword, comparePassword } = require('../utils/helpers');
 const User = require('../database/schemas/User');
 const router = Router();
 
@@ -17,11 +18,13 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, email } = req.body;
   const userDB = await User.findOne({ $or: [{ username }, { email }] });
   if(userDB){
     res.status(400).send('user already exists');
   } else {
+    const password = hashPassword(req.body.password);
+    console.log(password);
     const newUser = await User.create({ username, password, email });
     res.send(201);
   }
