@@ -1,10 +1,11 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+
 const friendsRoute = require('./routes/friends');
 const marketsRoute = require('./routes/markets');
 const authRoute = require('./routes/auth');
-
+require('./database');
 const app = express();
 const PORT = 3001;
 
