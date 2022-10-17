@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const friendsRoute = require('./routes/friends');
 const marketsRoute = require('./routes/markets');
+const authRoute = require('./routes/auth');
 
 const app = express();
 const PORT = 3001;
@@ -24,10 +25,11 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/api/auth', authRoute);
 app.use('/api/friends/', friendsRoute);
 app.use('/api/markets/', marketsRoute);
 
- 
+
 
 app.listen(PORT, () => console.log(`Running on port ${PORT}`));
 
