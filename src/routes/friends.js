@@ -1,8 +1,7 @@
+const { request } = require('express');
 const { Router } = require('express');
 
-
 const router = Router();
-
 
 let groceryList = [
   {
@@ -39,6 +38,31 @@ router.post("/", (req, res) => {
   console.log(req.body);
   groceryList.push(req.body);
   console.log(groceryList);
+  res.send(201);
+});
+
+router.get('/shopping/cart', (req, res) => {
+  const { cart } = req.session;
+  if(!cart) {
+    res.send("No Cart");
+  } else {
+    res.send(cart);
+  }
+});
+
+router.post('/shopping/cart/item', (req, res) => {
+  console.log(req.session);
+  const { name, skill } = req.body;
+  const cartItem = { name, skill }
+  const { cart } = req.session;
+  console.log(cartItem);
+  if (cart) {
+    req.session.cart.items.push(cartItem);
+  } else {
+    req.session.cart = {
+      items: [cartItem],
+    };
+  }
   res.send(201);
 });
 
