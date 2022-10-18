@@ -19,7 +19,8 @@ let groceryList = [
 ];
 
 router.use((req, res, next) => {
-  if(req.session.user) {
+  console.log("inside friends route")
+  if(req.user) {
       next();
   } else {
       res.send(401);
